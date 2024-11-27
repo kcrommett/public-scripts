@@ -6,15 +6,21 @@
 
 # Variables
 $Timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$AppName = "NewEnterpriseApp-$Timestamp"
+$AppName = "UnifiID-$Timestamp"
 $RedirectUri = "https://localhost"  
 $Domain = "latitudes.io" # Must be a verified domain in your tenant
 $SecretExpiryMonths = 24
 
 # Define permissions to be assigned to the new application
 $Permissions = @( 
-    @{ ScopeName = "User.Read.All" },
-    @{ ScopeName = "Directory.ReadWrite.All" }
+    @{ 
+        ScopeName = "User.Read.All"
+        Type = "Application"  # or "Delegated"
+    },
+    @{ 
+        ScopeName = "Directory.Read.All"
+        Type = "Application"  # or "Delegated"
+    }
 )
 
 if (-not (Get-Module -ListAvailable -Name Microsoft.Graph)) {
@@ -104,19 +110,21 @@ try {
     
     # Assign API Permissions using Microsoft Graph
     foreach ($permission in $Permissions) {
-        Write-Host "Assigning permission: $($permission.ScopeName) to Service Principal..."
+        Write-Host "Processing permission: $($permission.ScopeName) ($($permission.Type))..."
         
         try {
-            $params = @{
-                ClientId     = $ServicePrincipal.Id
-                ConsentType  = "AllPrincipals"
-                ResourceId   = $MicrosoftGraphServicePrincipal.Id
-                Scope        = $permission.ScopeName
+            if ($permission.Type -eq "Delegated") {
+                $params = @{
+                    ClientId     = $ServicePrincipal.Id
+                    ConsentType  = "AllPrincipals"
+                    ResourceId   = $MicrosoftGraphServicePrincipal.Id
+                    Scope        = $permission.ScopeName
+                }
+                
+                New-MgOAuth2PermissionGrant @params -ErrorAction Stop
+                Write-Host "Successfully assigned delegated permission: $($permission.ScopeName)"
             }
-            
-            Write-Host "Attempting to grant permission: $($permission.ScopeName)"
-            New-MgOAuth2PermissionGrant @params -ErrorAction Stop
-            Write-Host "Successfully assigned permission: $($permission.ScopeName)"
+            # For application permissions, we'll handle them in the admin consent section
         }
         catch {
             if ($_.Exception.Message -match "Permission entry already exists" -or $_.Exception.Message -match "Request_MultipleObjectsWithSameKeyValue") {
@@ -139,23 +147,40 @@ try {
     
     foreach ($permission in $Permissions) {
         try {
-            # Get the permission ID from Microsoft Graph Service Principal
-            $permissionId = $MicrosoftGraphServicePrincipal.Oauth2PermissionScopes | 
-                Where-Object { $_.Value -eq $permission.ScopeName } |
-                Select-Object -ExpandProperty Id
-    
-            if ($null -eq $permissionId) {
-                Write-Warning "Could not find permission ID for scope: $($permission.ScopeName)"
-                continue
+            if ($permission.Type -eq "Delegated") {
+                # Get delegated permission ID
+                $permissionId = $MicrosoftGraphServicePrincipal.Oauth2PermissionScopes | 
+                    Where-Object { $_.Value -eq $permission.ScopeName } |
+                    Select-Object -ExpandProperty Id
+
+                if ($null -eq $permissionId) {
+                    Write-Warning "Could not find delegated permission ID for scope: $($permission.ScopeName)"
+                    continue
+                }
+
+                $requiredResourceAccess[0].ResourceAccess += @{
+                    Id   = $permissionId
+                    Type = "Scope"  # "Scope" for delegated permissions
+                }
             }
-    
-            # Add to the required resource access array
-            $requiredResourceAccess[0].ResourceAccess += @{
-                Id   = $permissionId
-                Type = "Scope"
+            else {
+                # Get application permission ID
+                $permissionId = $MicrosoftGraphServicePrincipal.AppRoles | 
+                    Where-Object { $_.Value -eq $permission.ScopeName } |
+                    Select-Object -ExpandProperty Id
+
+                if ($null -eq $permissionId) {
+                    Write-Warning "Could not find application permission ID for scope: $($permission.ScopeName)"
+                    continue
+                }
+
+                $requiredResourceAccess[0].ResourceAccess += @{
+                    Id   = $permissionId
+                    Type = "Role"  # "Role" for application permissions
+                }
             }
             
-            Write-Host "Added permission: $($permission.ScopeName) to required resource access"
+            Write-Host "Added $($permission.Type) permission: $($permission.ScopeName) to required resource access"
         }
         catch {
             Write-Warning "Failed to process permission $($permission.ScopeName): $_"

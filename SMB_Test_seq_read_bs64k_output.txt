@@ -1,0 +1,86 @@
+SMB_Test_seq_read_bs64k: (g=0): rw=read, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=psync, iodepth=32
+...
+fio-3.38
+Starting 4 processes
+
+SMB_Test_seq_read_bs64k: (groupid=0, jobs=1): err= 0: pid=62926: Sun Nov 10 20:19:07 2024
+  read: IOPS=375, BW=23.5MiB/s (24.6MB/s)(1408MiB/60002msec)
+    clat (usec): min=1310, max=15884, avg=2638.49, stdev=470.75
+     lat (usec): min=1311, max=15884, avg=2638.78, stdev=470.75
+    clat percentiles (usec):
+     |  1.00th=[ 2245],  5.00th=[ 2245], 10.00th=[ 2278], 20.00th=[ 2311],
+     | 30.00th=[ 2540], 40.00th=[ 2540], 50.00th=[ 2573], 60.00th=[ 2573],
+     | 70.00th=[ 2573], 80.00th=[ 2802], 90.00th=[ 2933], 95.00th=[ 3654],
+     | 99.00th=[ 4490], 99.50th=[ 4817], 99.90th=[ 6456], 99.95th=[ 9241],
+     | 99.99th=[15008]
+   bw (  KiB/s): min=  125, max=26227, per=24.91%, avg=24056.53, stdev=2441.64, samples=118
+   iops        : min=    1, max=  409, avg=375.50, stdev=38.22, samples=118
+  lat (msec)   : 2=0.08%, 4=98.32%, 10=1.56%, 20=0.04%
+  cpu          : usr=0.22%, sys=4.10%, ctx=23278, majf=0, minf=12
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22530,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+SMB_Test_seq_read_bs64k: (groupid=0, jobs=1): err= 0: pid=62927: Sun Nov 10 20:19:07 2024
+  read: IOPS=375, BW=23.5MiB/s (24.6MB/s)(1408MiB/60002msec)
+    clat (usec): min=961, max=15525, avg=2638.01, stdev=467.35
+     lat (usec): min=961, max=15525, avg=2638.30, stdev=467.35
+    clat percentiles (usec):
+     |  1.00th=[ 2245],  5.00th=[ 2245], 10.00th=[ 2278], 20.00th=[ 2311],
+     | 30.00th=[ 2540], 40.00th=[ 2540], 50.00th=[ 2573], 60.00th=[ 2573],
+     | 70.00th=[ 2573], 80.00th=[ 2802], 90.00th=[ 3032], 95.00th=[ 3621],
+     | 99.00th=[ 4424], 99.50th=[ 4817], 99.90th=[ 6718], 99.95th=[ 9241],
+     | 99.99th=[15008]
+   bw (  KiB/s): min=  125, max=26101, per=24.91%, avg=24060.90, stdev=2445.22, samples=118
+   iops        : min=    1, max=  407, avg=375.56, stdev=38.28, samples=118
+  lat (usec)   : 1000=0.01%
+  lat (msec)   : 2=0.12%, 4=98.25%, 10=1.59%, 20=0.04%
+  cpu          : usr=0.22%, sys=4.09%, ctx=23255, majf=0, minf=13
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22534,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+SMB_Test_seq_read_bs64k: (groupid=0, jobs=1): err= 0: pid=62928: Sun Nov 10 20:19:07 2024
+  read: IOPS=375, BW=23.5MiB/s (24.6MB/s)(1408MiB/60003msec)
+    clat (usec): min=1057, max=15452, avg=2638.79, stdev=470.84
+     lat (usec): min=1057, max=15452, avg=2639.08, stdev=470.85
+    clat percentiles (usec):
+     |  1.00th=[ 2212],  5.00th=[ 2245], 10.00th=[ 2278], 20.00th=[ 2311],
+     | 30.00th=[ 2540], 40.00th=[ 2540], 50.00th=[ 2573], 60.00th=[ 2573],
+     | 70.00th=[ 2573], 80.00th=[ 2802], 90.00th=[ 3032], 95.00th=[ 3621],
+     | 99.00th=[ 4490], 99.50th=[ 4817], 99.90th=[ 6521], 99.95th=[ 9503],
+     | 99.99th=[15139]
+   bw (  KiB/s): min=  125, max=26101, per=24.91%, avg=24053.36, stdev=2440.10, samples=118
+   iops        : min=    1, max=  407, avg=375.44, stdev=38.20, samples=118
+  lat (msec)   : 2=0.08%, 4=98.28%, 10=1.60%, 20=0.04%
+  cpu          : usr=0.22%, sys=4.07%, ctx=23270, majf=0, minf=13
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22528,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+SMB_Test_seq_read_bs64k: (groupid=0, jobs=1): err= 0: pid=62929: Sun Nov 10 20:19:07 2024
+  read: IOPS=382, BW=23.9MiB/s (25.1MB/s)(1434MiB/60003msec)
+    clat (usec): min=921, max=15501, avg=2611.30, stdev=510.81
+     lat (usec): min=921, max=15501, avg=2611.60, stdev=510.82
+    clat percentiles (usec):
+     |  1.00th=[ 1090],  5.00th=[ 2245], 10.00th=[ 2278], 20.00th=[ 2311],
+     | 30.00th=[ 2540], 40.00th=[ 2540], 50.00th=[ 2573], 60.00th=[ 2573],
+     | 70.00th=[ 2573], 80.00th=[ 2802], 90.00th=[ 2933], 95.00th=[ 3654],
+     | 99.00th=[ 4424], 99.50th=[ 4817], 99.90th=[ 6456], 99.95th=[ 9896],
+     | 99.99th=[14877]
+   bw (  KiB/s): min=20078, max=53669, per=25.37%, avg=24504.97, stdev=2891.54, samples=118
+   iops        : min=  313, max=  838, avg=382.50, stdev=45.18, samples=118
+  lat (usec)   : 1000=0.01%
+  lat (msec)   : 2=1.90%, 4=96.48%, 10=1.57%, 20=0.04%
+  cpu          : usr=0.23%, sys=4.18%, ctx=23743, majf=0, minf=12
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=22951,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+   READ: bw=94.3MiB/s (98.9MB/s), 23.5MiB/s-23.9MiB/s (24.6MB/s-25.1MB/s), io=5659MiB (5934MB), run=60002-60003msec
